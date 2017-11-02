@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello World</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--add required stylesheets-->
+    <!--make sure you add bootstrap 3.3.7 rather than 4.0.0-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--leaflet css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
+    <!--animation-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="Assets/Storymap.css">
+
+    <!--add required libraries-->
+    <!--leaflet-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"></script>
+    <!--jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--boostrap-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--leaflet.ajax for asynchronously adding geojson data-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <!--story map plugin-->
+    <script src="Assets/Storymap.js"></script>
+</head>
+<body>
+<div id="storymap" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-md-8 storymap-map"></div>
+        <div class="col-sm-6 col-md-4 storymap-story">
+            <section data-scene="scene1">
+                <h2>Senegal is a land of many contrasts</h2>
+            </section>
+            <section data-scene="scene2">
+                <h2>This is what Senegal looks like with terrain</h2>
+            </section>
+            <section data-scene="scene3">
+                <h2>No, now we're going to Kedougou</h2>
+            </section>
+            <section data-scene="scene4">
+                <h2>Fode Binea</h2>
+            </section>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    var layers = {
+        //Terrain Layer
+        layer1: {
+            layer: L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+            legend: '<i style="background: black; opacity: 0.5"></i><p><b>legend 1</b></p>'
+        },
+        //SENEGAL geojson
+        layer2: {
+            layer: L.geoJson.ajax('Assets/regions_senegal.geojson', {
+                color: 'yellowgreen',
+                weight: 5
+            }),
+            legend: '<i style="background: yellowgreen; opacity: 0.5"></i><p><b>Regions of Senegal</b></p>'
+        },
+        //Basemap
+        layer3: {
+            layer: L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw', {id: 'mapbox.outdoors'})
+        }
+    };
+    var scenes = {
+        scene1: {lat: 14.467079, lng: -14.460133, zoom:  8, layers: ['layer3'], name: "scene 1"},
+        scene2: {lat: 14.467079, lng: -14.460133, zoom:  8, layers: ['layer1'], name: "scene 2"},
+        scene3: {lat: 12.5605, lng: -12.1747, zoom: 10, layers: ['layer2', 'layer3'], name: "scene 3"},
+        scene4: {lat: 12.785738, lng: -11.707882, zoom: 13, layers: ['layer3'], name: "scene 4"}
+    };
+    $('#storymap').storymap({
+        scenes: scenes,
+        layers: layers,
+        baselayer: layers.layer3,
+        legend: true,
+        loader: true,
+        flyto: false,
+        credits: "build with<i class='glyphicon glyphicon-heart' style='color: red'></i> from Bo Zhao",
+        scalebar: true,
+        scrolldown: false,
+        progressline: true,
+        navwidget: true,
+        createMap: function () {
+            var map = L.map($(".storymap-map")[0], {zoomControl: false}).setView([44, -120], 7);
+            basemap = this.baselayer.layer.addTo(map);
+            return map;
+        }
+    });
+</script>
+</body>
+</html>
