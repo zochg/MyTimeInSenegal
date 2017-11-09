@@ -11,27 +11,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
     <!--animation-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!--facebook and info icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Google Font-->
-    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Assets/Storymap.css">
+
 
     <!--add required libraries-->
     <!--leaflet-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"></script>
     <!--jquery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!--boostrap-->
+    <!--bootstrap-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--leaflet.ajax for asynchronously adding geojson data-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
     <!--story map plugin-->
     <script src="Assets/Storymap.js"></script>
+    <!--add favicon for the web page-->
+    <link rel="shortcut icon" href="img/US-PeaceCorps-Logo-alt.ico" type="image/x-icon">
+
 </head>
 <body>
 <div id="storymap" class="container-fluid">
     <div class="row">
-        <div class="col-sm-6 col-md-8 storymap-map"></div>
-        <div class="col-sm-6 col-md-4 storymap-story">
+        <div class="col-sm-6 col-md-8 storymap-story">
+            <section class="viewing section-opacity" data-scene="overview" data-background="Assets/Senegal.mp4" style="height: 328.17px; width:0px; padding: 0px;">
+                <video class="fullscreen" playsinline="" autoplay="" muted="" loop=""?>
+                    <source src="Assets/Senegal.mp4" tupe="video/mp4">
+                </video>
+                <div class="fullscreen text-center">
+                    <h1>Volunteering in Senegal</h1>
+                    <h1>
+                        <small style="color: rgba(255,255,255,0.95)"> This Storymap is meant to give a brief overview of Senegal and my time spent there as a Peace Corps Volunteer.
+                        </small>
+                    </h1>
+                    <h4>
+                        <small style="color: rgba(255,255,255,0.95)"> Video credit: cnn.com
+                        </small>
+                    </h4>
+                </div>
+            </section>
             <section data-scene="scene1">
                 <h2>Senegal is a land of many contrasts</h2>
             </section>
@@ -45,7 +66,48 @@
                 <h2>Fode Binea</h2>
             </section>
         </div>
-
+        <div class="col-sm-6 col-md-8 storymap-map"></div>
+    </div>
+    <dl>
+        <dt>
+            <!--facebook icon-->
+            <a class="fa fa-facebook-square btn"
+               href="https://facebook.com/sharer.php?u=http://geoviz.ceoas.oregonstate.edu/storymap/examples/2.3/video.html"
+               target="_blank"></a>
+        </dt>
+        <dt>
+            <!--facebook icon-->
+            <a class="fa fa-git-square btn" href="https://github.com/zochg/MyTimeInSenegal" style="top:40px"
+               target="_blank"></a>
+        </dt>
+        <dt>
+            <!--info icon-->
+            <i class="fa fa-file-text-o btn" style="top:60px" data-toggle="modal" data-target="#info-modal"></i>
+        </dt>
+    </dl>
+    <!--the info page-->
+    <div class="modal fade" id="info-modal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This story map is meant to illustrate my time in Senegal as a Peace Corps Volunteer from 2014-2016. It was made
+                        as part of a project for Professor Bo Zhao at Oregon State University as part of the class GEOG371 Geovisualization. Its functionality
+                        relies on both leaflet and Boostrap.</p>
+                    <p><b>storymap.js</b> | Released Date: 02/20/2017 | Version: 2.1 | MIT License </p>
+                    <p><b>Author: Grant Zoch</b> | College of Earth, Ocean, Atmospheric Science | Oregon State University
+                    </p>
+                    <p>The <a href="https://www.youtube.com/watch?v=TV7m6ukStdY">background video</a> on the front page
+                        was clipped from Youtube, produced by CNN. </p>
+                    <p>The favicon image was acquired from <a>http://www.udlcenter.org/advocacy/state/oregon.</a></p>
+                    <p>This story map uses geospatial data from mapbox, Google Earth Engine, ESRI Map, Open Street Maps
+                        and github.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -69,25 +131,26 @@
         }
     };
     var scenes = {
+        overview: {lat: 14.467079, lng: -14.460133, zoom: 8, name: 'Cover Page'},
         scene1: {lat: 14.467079, lng: -14.460133, zoom:  8, layers: ['layer3'], name: "scene 1"},
-        scene2: {lat: 14.467079, lng: -14.460133, zoom:  8, layers: ['layer1'], name: "scene 2"},
+        scene2: {lat: 14.467079, lng: -14.460133, zoom:  8, layers: ['layer1', 'layer2'], name: "scene 2"},
         scene3: {lat: 12.5605, lng: -12.1747, zoom: 10, layers: ['layer2', 'layer3'], name: "scene 3"},
-        scene4: {lat: 12.785738, lng: -11.707882, zoom: 13, layers: ['layer3'], name: "scene 4"}
+        scene4: {lat: 12.785738, lng: -11.707882, zoom: 17, layers: ['layer1'], name: "scene 4"}
     };
     $('#storymap').storymap({
         scenes: scenes,
         layers: layers,
         baselayer: layers.layer3,
         legend: true,
-        loader: true,
-        flyto: false,
-        credits: "build with<i class='glyphicon glyphicon-heart' style='color: red'></i> from Bo Zhao",
+        loader: false,
+        flyto: true,
+        credits: "grant zoch made this fuckin map he'll yeah",
         scalebar: true,
         scrolldown: false,
         progressline: true,
         navwidget: true,
         createMap: function () {
-            var map = L.map($(".storymap-map")[0], {zoomControl: false}).setView([44, -120], 7);
+            var map = L.map($(".storymap-map")[0], {zoomControl: false}).setView([14.467079, -14.460133], 8);
             basemap = this.baselayer.layer.addTo(map);
             return map;
         }
